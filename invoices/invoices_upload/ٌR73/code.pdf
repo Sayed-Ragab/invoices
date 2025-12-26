@@ -1,0 +1,43 @@
+  /*size of array = n
+    query = 1 0 5 => x = 0, y = 5 ;
+    query - col - 0 = 1
+            col - 1 = 0
+            col - 2 = 5
+    */
+    int lastAnswer = 0 ;    int index ; 
+    
+    int ** arr =  (int**)malloc(n * sizeof(int* )) ;
+    for(int i=0; i<n; i++){
+        arr[i] = (int *)malloc( sizeof(int*)) ;
+    }
+    
+    int *temp_size = (int*)calloc(n, sizeof(int)) ;
+    int *ans = (int *)malloc( sizeof(int)) ;
+    int count = 0 ;
+    //
+    for(int i=0; i<queries_rows ; i++){
+        if(queries[i][0] == 1){
+            
+            int x = queries[i][1] ; int y = queries[i][2] ;
+/*step1*/   int index = ( (x^lastAnswer) % n ) ;
+            
+            arr[index] = (int *)realloc(arr[index], (temp_size[index] +1)*sizeof(int) ) ;
+/*step2*/   arr[index][temp_size[index] ] = y ;
+            
+            temp_size[index] += 1 ;
+        }
+        else {// query type-2
+        
+            int x = queries[i][1] ; int y = queries[i][2] ;
+/*step1*/   int index = ( (x^lastAnswer) % n ) ;
+            
+/*step2*/   lastAnswer = arr[index][y%(temp_size[index])] ;
+
+            ans = (int *)realloc(ans, (count+1)*sizeof(int) ) ;
+/*step3*/   ans[count] = lastAnswer ;
+            count++ ;
+        }
+    }
+    
+    *result_count = count ;
+    return ans ;
