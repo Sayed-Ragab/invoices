@@ -154,7 +154,7 @@
                         success: function(data) {
                             $('select[name="product"]').empty();
                             $.each(data, function(key, value) {
-                                $('select[name="product"]').append('<option value="' + value.id + '">' + value.product_name + '</option>');
+                                $('select[name="product"]').append('<option value="' + value.product_name + '">' + value.product_name + '</option>');
                             });
                         },
                     });
